@@ -11,7 +11,7 @@ function ProjectList(props: Props) {
         {props.projects.map((project: AppProject) => {
           return (
             <div key={project.id}>
-              <div className="flex justify-between border-2 border-slate-200 rounded-sm p-1">
+              <div className="flex justify-between border border-slate-200 rounded-sm p-1 shadow">
                 <div className="text-xl font-bold py-5 px-5 text-gray-600">{project.title}</div>
                 <div className="flex flex-col justify-between">
                   <div className="flex flex-row-reverse">
@@ -21,7 +21,7 @@ function ProjectList(props: Props) {
                   <div className="flex flex-row-reverse">
                     {project.cities.map((city) => {
                       return(
-                        <div className="badge bg-sky-100 mx-px" key={city.id}>{city.name}</div>
+                        <div className="badge bg-sky-100 mx-px" key={city.id}>{city.name}, {city.country.name}</div>
                       )
                     })}
                   </div>

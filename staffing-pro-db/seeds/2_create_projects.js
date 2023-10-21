@@ -8,6 +8,10 @@ function shuffle(a) {
   return a
 }
 
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1)
+}
+
 exports.seed = async function (knex) {
   const cities = await knex('cities').select('id')
   const industries = await knex('industries').select('id')
@@ -24,7 +28,7 @@ exports.seed = async function (knex) {
       const vertical = shuffle(verticals)[0]
       const client = shuffle(clients)[0]
       return {
-        title: `${vertical.name} project for ${client.name} - ${faker.company.buzzVerb()}`,
+        title: `${vertical.name} project (${capitalizeFirstLetter(faker.company.buzzVerb())}) for ${client.name}`,
         description: faker.lorem.paragraph(),
         stage: shuffle(stages)[0],
         company_id: client.id,
