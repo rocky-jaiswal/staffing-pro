@@ -1,0 +1,34 @@
+micronaut:
+  application:
+    name: "staffing-pro-api"
+  security:
+    enabled: true
+    authentication: bearer
+    token:
+      jwt:
+        enabled: true
+        signatures:
+          jwks:
+            custom:
+              url: "http://localhost:9090/.well-known/jwks.json"
+
+datasources:
+  default:
+    driver-class-name: org.postgresql.Driver
+    db-type: postgres
+    dialect: POSTGRES
+    username: postgresdev
+    password: postgresdev
+    url: "jdbc:postgresql://localhost:5432/staffing_pro_dev"
+
+jpa:
+  default:
+    entity-scan:
+      packages:
+        - 'dev.rockyj.staffing_pro_api.entities'
+    properties:
+      hibernate:
+        show_sql: true
+        # format_sql: true
+        hbm2ddl:
+          auto: validate

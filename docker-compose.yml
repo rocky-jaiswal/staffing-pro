@@ -1,0 +1,17 @@
+version: '3'
+services:
+  db:
+    networks:
+      - appnet
+    build:
+      context: ./postgres
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_PASSWORD: 'postgres'
+networks:
+  appnet:
+    driver: 'bridge'
+volumes:
+  data:
+    driver: 'local'
