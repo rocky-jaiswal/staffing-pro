@@ -13,6 +13,7 @@ import io.micronaut.security.rules.SecurityRule;
 import jakarta.validation.constraints.NotBlank;
 
 import java.util.List;
+import java.util.Map;
 
 @ExecuteOn(TaskExecutors.IO)
 @Controller("/v1/projects")
@@ -30,5 +31,10 @@ public class ProjectsController {
     @Get("/{pageNumber}")
     List<ProjectDTO> index(@PathVariable @NotBlank String pageNumber) {
         return this.projectService.findAllProjectsWithDetails(Pageable.from(Integer.parseInt(pageNumber), PAGE_SIZE));
+    }
+
+    @Get("/count")
+    Map<String, Long> count() {
+        return Map.of("count", this.projectService.countProjects());
     }
 }

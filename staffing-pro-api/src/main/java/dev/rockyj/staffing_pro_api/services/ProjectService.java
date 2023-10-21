@@ -20,6 +20,10 @@ public class ProjectService {
         this.projectsRepository = projectsRepository;
     }
 
+    public Long countProjects() {
+        return projectsRepository.count();
+    }
+
     public List<ProjectDTO> findAllProjectsWithDetails(Pageable pageable) {
         var projects = projectsRepository.findAll(pageable);
 
