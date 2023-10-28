@@ -73,8 +73,7 @@ export const usersRouter = createTRPCRouter({
       const response = await fetch(`${env.AUTH_SERVER_URL}/v1/user`, {
         method: 'get',
         headers: {
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          authorization: `token ${ctx.session.token!}`,
+          authorization: `token ${ctx.session.token ?? ''}`,
         },
       })
 

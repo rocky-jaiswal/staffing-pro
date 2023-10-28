@@ -4,11 +4,13 @@ import dev.rockyj.staffing_pro_api.dtos.CityDTO;
 import dev.rockyj.staffing_pro_api.dtos.ProjectDTO;
 import dev.rockyj.staffing_pro_api.dtos.ProjectPositionDTO;
 import dev.rockyj.staffing_pro_api.dtos.SkillDTO;
+import dev.rockyj.staffing_pro_api.entities.Project;
 import dev.rockyj.staffing_pro_api.repositories.ProjectsRepository;
+import io.micronaut.data.model.Page;
 import io.micronaut.data.model.Pageable;
 import jakarta.inject.Singleton;
 
-import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Singleton
@@ -24,12 +26,19 @@ public class ProjectService {
         return projectsRepository.count();
     }
 
-    public List<ProjectDTO> findAllProjectsWithDetails(Pageable pageable) {
-        var projects = projectsRepository.findAll(pageable);
+    public Map<String, Object> findAllProjectsWithDetails(Pageable pageable, String selectedCountryId) {
+        Page<Project> projects = null;
 
-        return projects.
+        if (selectedCountryId != null) {
+            projects = projectsRepository.findByCountry(pageable, selectedCountryId);
+        } else {
+            projects = projectsRepository.findAll(pageable);
+        }
+
+        var projectList = projects.
                 getContent()
-                .stream().map((var project) -> new ProjectDTO(
+                .stream()
+                .map((var project) -> new ProjectDTO(
                         project.getId().toString(),
                         project.getTitle(),
                         project.getDescription(),
@@ -66,5 +75,7 @@ public class ProjectService {
                                                 .collect(Collectors.toList())
                                 )).collect(Collectors.toList())
                 )).collect(Collectors.toList());
+
+        return Map.of("projects", projectList, "count", projects.getTotalSize());
     }
 }

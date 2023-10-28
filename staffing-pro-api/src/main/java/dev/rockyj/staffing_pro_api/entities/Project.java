@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -42,6 +43,9 @@ public class Project {
 
     @Column(name = "end_date")
     private LocalDate endDate;
+
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
     @Column
     private boolean promoted = false;

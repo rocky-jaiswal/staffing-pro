@@ -1,16 +1,21 @@
 package dev.rockyj.staffing_pro_api.repositories;
 
 import dev.rockyj.staffing_pro_api.entities.*;
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.data.annotation.Repository;
 import io.micronaut.data.jpa.repository.JpaSpecificationExecutor;
+import io.micronaut.data.model.Page;
+import io.micronaut.data.model.Pageable;
 import io.micronaut.data.repository.PageableRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.criteria.*;
 import jakarta.transaction.Transactional;
+import lombok.extern.java.Log;
 
 import java.util.List;
 import java.util.UUID;
 
+@Log
 @Repository
 public abstract class ProjectsRepository implements PageableRepository<Project, UUID>, JpaSpecificationExecutor<Project> {
 
@@ -18,6 +23,50 @@ public abstract class ProjectsRepository implements PageableRepository<Project, 
 
     public ProjectsRepository(EntityManager entityManager) {
         this.entityManager = entityManager;
+    }
+
+    //TODO: Use page for filtered data
+    @Transactional
+    public Page<Project> findByCountry(Pageable pageable, String countryId) {
+        // log.info("->" + pageable.toString());
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Project> criteriaQuery = builder.createQuery(Project.class);
+
+        Root<Project> project = criteriaQuery.from(Project.class);
+        ListJoin<Project, City> cityListJoin = project.join(Project_.projectCities);
+        Join<City, Country> cityCountryListJoin = cityListJoin.join(City_.country);
+
+        var predicate = builder.equal(cityCountryListJoin.get(Country_.ID), UUID.fromString(countryId));
+        var query = entityManager
+                .createQuery(criteriaQuery.where(predicate).orderBy(builder.desc(project.get("createdAt"))));
+        var allResultsSize = query.getResultList().size();
+        // log.info("size ->" + allResultsSize);
+        var results = query
+                .setFirstResult((int) pageable.getOffset())
+                .setMaxResults(pageable.getSize())
+                .getResultList();
+
+        return new Page<Project>() {
+            @Override
+            public long getTotalSize() {
+                return allResultsSize;
+            }
+
+            @Override
+            public int getTotalPages() {
+                return allResultsSize / pageable.getSize();
+            }
+
+            @Override
+            public @NonNull List<Project> getContent() {
+                return results;
+            }
+
+            @Override
+            public @NonNull Pageable getPageable() {
+                return pageable;
+            }
+        };
     }
 
     // TODO: Try and solve n+1 problem

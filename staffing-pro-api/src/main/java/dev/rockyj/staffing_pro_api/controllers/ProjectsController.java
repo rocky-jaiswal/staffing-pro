@@ -1,18 +1,18 @@
 package dev.rockyj.staffing_pro_api.controllers;
 
-import dev.rockyj.staffing_pro_api.dtos.ProjectDTO;
 import dev.rockyj.staffing_pro_api.services.ProjectService;
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.data.model.Pageable;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.PathVariable;
+import io.micronaut.http.annotation.QueryValue;
 import io.micronaut.scheduling.TaskExecutors;
 import io.micronaut.scheduling.annotation.ExecuteOn;
 import io.micronaut.security.annotation.Secured;
 import io.micronaut.security.rules.SecurityRule;
 import jakarta.validation.constraints.NotBlank;
 
-import java.util.List;
 import java.util.Map;
 
 @ExecuteOn(TaskExecutors.IO)
@@ -29,12 +29,7 @@ public class ProjectsController {
     }
 
     @Get("/{pageNumber}")
-    List<ProjectDTO> index(@PathVariable @NotBlank String pageNumber) {
-        return this.projectService.findAllProjectsWithDetails(Pageable.from(Integer.parseInt(pageNumber), PAGE_SIZE));
-    }
-
-    @Get("/count")
-    Map<String, Long> count() {
-        return Map.of("count", this.projectService.countProjects());
+    Map<String, Object> index(@PathVariable @NotBlank String pageNumber, @QueryValue @Nullable String country) {
+        return this.projectService.findAllProjectsWithDetails(Pageable.from(Integer.parseInt(pageNumber), PAGE_SIZE), country);
     }
 }

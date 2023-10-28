@@ -123,7 +123,7 @@ exports.seed = async function (knex) {
     { name: 'Seattle', country_id: usa.id },
     { name: 'Stockholm', country_id: sweden.id },
     { name: 'Goeteborg', country_id: sweden.id },
-    { name: 'Argentina', country_id: sweden.id },
+    { name: 'Malmo', country_id: sweden.id },
     { name: 'Uppsala', country_id: sweden.id },
     { name: 'Melbourne', country_id: australia.id },
     { name: 'Sydney', country_id: australia.id },
