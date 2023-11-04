@@ -16,6 +16,9 @@ exports.up = async (knex) => {
     table.foreign('project_id').references('projects.id')
     table.index(['project_id'], 'idx_project_id_project_users')
 
+    table.foreign('user_id').references('users.id')
+    table.index(['user_id'], 'idx_user_id_project_users')
+
     table.foreign('project_administration_role_id').references('project_administration_roles.id')
   })
 }

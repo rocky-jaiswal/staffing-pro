@@ -1,6 +1,6 @@
 package dev.rockyj.staffing_pro_api.controllers;
 
-import dev.rockyj.staffing_pro_api.dtos.GeographyDTO;
+import dev.rockyj.staffing_pro_api.domain.dtos.GeographyDTO;
 import dev.rockyj.staffing_pro_api.services.GeographyServices;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;

@@ -31,6 +31,7 @@ const HomePage: NextPageWithLayout = () => {
   const [showFilters, setShowFilters] = useState(false)
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null)
 
+  const competencies = api.competencies.competenciesList.useQuery()
   const countries = api.countries.countryList.useQuery()
   const projects = api.projects.projectList.useQuery({
     pageNumber,
@@ -53,6 +54,7 @@ const HomePage: NextPageWithLayout = () => {
         {showFilters ? (
           <FilterBox
             countries={countries.isSuccess ? countries.data : []}
+            competencies={competencies.isSuccess ? competencies.data : []}
             setSelectedCountry={(country: string) =>
               setSelectedCountry(country)
             }

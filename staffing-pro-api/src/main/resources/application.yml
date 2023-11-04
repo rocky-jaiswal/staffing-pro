@@ -25,7 +25,7 @@ jpa:
   default:
     entity-scan:
       packages:
-        - 'dev.rockyj.staffing_pro_api.entities'
+        - 'dev.rockyj.staffing_pro_api.domain.entities'
     properties:
       hibernate:
         show_sql: true

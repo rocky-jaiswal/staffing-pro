@@ -1,4 +1,4 @@
-package dev.rockyj.staffing_pro_api.dtos;
+package dev.rockyj.staffing_pro_api.domain.dtos;
 
 import io.micronaut.serde.annotation.Serdeable;
 

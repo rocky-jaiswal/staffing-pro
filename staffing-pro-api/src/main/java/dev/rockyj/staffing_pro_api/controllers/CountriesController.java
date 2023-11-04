@@ -1,6 +1,6 @@
 package dev.rockyj.staffing_pro_api.controllers;
 
-import dev.rockyj.staffing_pro_api.dtos.CountryDTO;
+import dev.rockyj.staffing_pro_api.domain.dtos.CountryDTO;
 import dev.rockyj.staffing_pro_api.services.CountryServices;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;

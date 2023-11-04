@@ -53,6 +53,9 @@ export const usersRouter = createTRPCRouter({
         })
 
         const responseBody = (await response.json()) as Record<string, string>
+        console.log('======================')
+        console.log(responseBody)
+        console.log('======================')
         const token = await encryptToken(responseBody.token as string)
 
         ctx.res.setHeader('Set-Cookie', createCookie(token))

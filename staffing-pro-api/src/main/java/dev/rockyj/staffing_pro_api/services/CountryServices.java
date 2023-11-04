@@ -1,7 +1,7 @@
 package dev.rockyj.staffing_pro_api.services;
 
-import dev.rockyj.staffing_pro_api.dtos.CountryDTO;
-import dev.rockyj.staffing_pro_api.dtos.GeographyDTO;
+import dev.rockyj.staffing_pro_api.domain.dtos.CountryDTO;
+import dev.rockyj.staffing_pro_api.domain.dtos.GeographyDTO;
 import dev.rockyj.staffing_pro_api.repositories.CountriesRepository;
 import jakarta.inject.Singleton;
 

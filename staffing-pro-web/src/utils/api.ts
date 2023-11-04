@@ -11,7 +11,11 @@ import { createTRPCNext } from '@trpc/next'
 import superjson from 'superjson'
 
 import { type AppRouter } from '../server/api/root'
-import { type Country, type Project } from '../server/types/project'
+import {
+  type Competency,
+  type Country,
+  type Project,
+} from '../server/types/project'
 
 const getBaseUrl = () => {
   if (typeof window !== 'undefined') return '' // browser should use relative url
@@ -65,5 +69,6 @@ export type RouterInputs = inferRouterInputs<AppRouter>
  **/
 export type RouterOutputs = inferRouterOutputs<AppRouter>
 
-export type AppProject = Project
-export type AppCountry = Country
+export type ProjectType = Project
+export type CountryType = Country
+export type CompetencyType = Competency

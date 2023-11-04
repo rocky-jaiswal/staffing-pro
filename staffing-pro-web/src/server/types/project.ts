@@ -1,3 +1,8 @@
+export interface Competency {
+  id: string
+  name: string
+}
+
 export interface Geography {
   id: string
   name: string

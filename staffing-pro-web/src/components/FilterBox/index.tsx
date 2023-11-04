@@ -1,7 +1,8 @@
-import { type AppCountry } from '../../utils/api'
+import { type CompetencyType, type CountryType } from '../../utils/api'
 
 interface Props {
-  countries?: AppCountry[]
+  countries?: CountryType[]
+  competencies?: CompetencyType[]
   setSelectedCountry: (countryId: string) => unknown
 }
 
@@ -15,10 +16,25 @@ function FilterBox(props: Props) {
           className="select select-secondary w-full max-w-xs"
           onChange={(e) => props.setSelectedCountry(e.currentTarget.value)}
         >
-          {(props.countries ?? []).map((country: AppCountry) => {
+          {(props.countries ?? []).map((country: CountryType) => {
             return (
               <option key={country.id} value={country.id}>
                 {country.name}
+              </option>
+            )
+          })}
+        </select>
+      </div>
+      <div className="flex py-4">
+        <p className="py-2 pr-4">Competency:</p>
+        <select
+          className="select select-secondary w-full max-w-xs"
+          //onChange={(e) => props.setSelectedCountry(e.currentTarget.value)}
+        >
+          {(props.competencies ?? []).map((competency: CompetencyType) => {
+            return (
+              <option key={competency.id} value={competency.id}>
+                {competency.name}
               </option>
             )
           })}

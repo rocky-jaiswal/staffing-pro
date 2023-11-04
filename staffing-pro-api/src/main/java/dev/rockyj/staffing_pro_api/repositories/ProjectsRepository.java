@@ -1,6 +1,6 @@
 package dev.rockyj.staffing_pro_api.repositories;
 
-import dev.rockyj.staffing_pro_api.entities.*;
+import dev.rockyj.staffing_pro_api.domain.entities.*;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.data.annotation.Repository;
 import io.micronaut.data.jpa.repository.JpaSpecificationExecutor;
@@ -34,11 +34,12 @@ public abstract class ProjectsRepository implements PageableRepository<Project, 
 
         Root<Project> project = criteriaQuery.from(Project.class);
         ListJoin<Project, City> cityListJoin = project.join(Project_.projectCities);
-        Join<City, Country> cityCountryListJoin = cityListJoin.join(City_.country);
 
+        Join<City, Country> cityCountryListJoin = cityListJoin.join(City_.country);
         var predicate = builder.equal(cityCountryListJoin.get(Country_.ID), UUID.fromString(countryId));
         var query = entityManager
                 .createQuery(criteriaQuery.where(predicate).orderBy(builder.desc(project.get("createdAt"))));
+
         var allResultsSize = query.getResultList().size();
         // log.info("size ->" + allResultsSize);
         var results = query

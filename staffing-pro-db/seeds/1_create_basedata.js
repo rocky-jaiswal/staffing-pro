@@ -187,15 +187,31 @@ exports.seed = async function (knex) {
 
   await knex('companies').insert(Object.keys(companies).map((name) => ({ name })))
 
+  await knex('competencies').insert([
+    { name: 'Engineering' },
+    { name: 'Accounting' },
+    { name: 'Sales & Marketing' },
+    { name: 'Design' },
+    { name: 'Project Management' },
+    { name: 'Data Science' },
+    { name: 'AI & ML' },
+    { name: 'Analyst' },
+    { name: 'Legal' },
+  ])
+  const engineering = await knex('competencies').select('id').where({ name: 'Engineering' }).first()
+  const accounting = await knex('competencies').select('id').where({ name: 'Accounting' }).first()
+  const ds = await knex('competencies').select('id').where({ name: 'Data Science' }).first()
+  const pm = await knex('competencies').select('id').where({ name: 'Project Management' }).first()
+  const design = await knex('competencies').select('id').where({ name: 'Design' }).first()
+  const legal = await knex('competencies').select('id').where({ name: 'Legal' }).first()
+  const ai = await knex('competencies').select('id').where({ name: 'AI & ML' }).first()
   await knex('roles').insert([
     { name: 'Software Developer - Lead' },
-    { name: 'Software Developer - Backend Developer' },
-    { name: 'Software Developer - Frontend Developer' },
+    { name: 'Software Developer - Senior Developer' },
     { name: 'Design' },
     { name: 'Project Lead' },
     { name: 'Project Manager' },
     { name: 'Product Owner' },
-    { name: 'Analyst' },
     { name: 'Auditor' },
     { name: 'Associate' },
     { name: 'Senior Associate' },
@@ -205,22 +221,27 @@ exports.seed = async function (knex) {
     { name: 'Machine Learning - Engineer' },
   ])
   await knex('skills').insert([
-    { name: 'Software Developer - Java' },
-    { name: 'Software Developer - JavaScript' },
-    { name: 'Software Developer - Python' },
-    { name: 'Software Developer - Kafka' },
-    { name: 'Software Developer - Frontend' },
-    { name: 'Software Developer - Mobile' },
-    { name: 'UI/UX Expert' },
-    { name: 'Web Application Design' },
-    { name: 'Mobile Application Design' },
-    { name: 'Machine Learning - Python' },
+    { name: 'Software Developer - Java', competency_id: engineering.id },
+    { name: 'Software Developer - JavaScript', competency_id: engineering.id },
+    { name: 'Software Developer - Python', competency_id: engineering.id },
+    { name: 'Software Developer - Kafka', competency_id: engineering.id },
+    { name: 'Software Developer - Frontend', competency_id: engineering.id },
+    { name: 'Software Developer - Mobile', competency_id: engineering.id },
+    { name: 'UI/UX Expert', competency_id: design.id },
+    { name: 'Web Application Design', competency_id: engineering.id },
+    { name: 'Mobile Application Design', competency_id: design.id },
+    { name: 'Machine Learning - Python', competency_id: ds.id },
+    { name: 'Project Management', competency_id: pm.id },
+    { name: 'Auditor', competency_id: accounting.id },
+    { name: 'Legal Expert', competency_id: legal.id },
+    { name: 'Data Analyst', competency_id: ds.id },
+    { name: 'Machine Learning - Engineer', competency_id: ai.id },
   ])
   await knex('project_administration_roles').insert([
-    { name: 'Admin' },
-    { name: 'Editor' },
-    { name: 'Member' },
-    { name: 'Applicant' },
-    { name: 'Observer' },
+    { name: 'CREATOR' },
+    { name: 'EDITOR' },
+    { name: 'MEMBER' },
+    { name: 'APPLICANT' },
+    { name: 'OBSERVER' },
   ])
 }

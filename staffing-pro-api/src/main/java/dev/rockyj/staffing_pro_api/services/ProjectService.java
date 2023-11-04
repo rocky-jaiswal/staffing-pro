@@ -1,10 +1,10 @@
 package dev.rockyj.staffing_pro_api.services;
 
-import dev.rockyj.staffing_pro_api.dtos.CityDTO;
-import dev.rockyj.staffing_pro_api.dtos.ProjectDTO;
-import dev.rockyj.staffing_pro_api.dtos.ProjectPositionDTO;
-import dev.rockyj.staffing_pro_api.dtos.SkillDTO;
-import dev.rockyj.staffing_pro_api.entities.Project;
+import dev.rockyj.staffing_pro_api.domain.dtos.CityDTO;
+import dev.rockyj.staffing_pro_api.domain.dtos.ProjectDTO;
+import dev.rockyj.staffing_pro_api.domain.dtos.ProjectPositionDTO;
+import dev.rockyj.staffing_pro_api.domain.dtos.SkillDTO;
+import dev.rockyj.staffing_pro_api.domain.entities.Project;
 import dev.rockyj.staffing_pro_api.repositories.ProjectsRepository;
 import io.micronaut.data.model.Page;
 import io.micronaut.data.model.Pageable;

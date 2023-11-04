@@ -3,20 +3,15 @@
 exports.up = async (knex) => {
   await knex.raw('CREATE EXTENSION IF NOT EXISTS "uuid-ossp"')
 
-  return knex.schema.createTable('cities', (table) => {
+  return knex.schema.createTable('users', (table) => {
     table.uuid('id').primary().defaultTo(knex.raw('uuid_generate_v4()'))
-    table.text('name').unique().notNull()
-
-    table.uuid('country_id').notNullable()
+    table.text('email').unique().notNull()
 
     table.timestamp('created_at').defaultTo(knex.fn.now())
     table.timestamp('updated_at').defaultTo(knex.fn.now())
-
-    table.foreign('country_id').references('countries.id')
-    table.index(['country_id'], 'idx_country_id_cities')
   })
 }
 
 exports.down = async (knex) => {
-  return knex.schema.dropTable('cities')
+  return knex.schema.dropTable('users')
 }

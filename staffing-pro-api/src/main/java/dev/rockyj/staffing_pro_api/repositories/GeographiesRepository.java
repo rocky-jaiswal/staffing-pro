@@ -1,6 +1,6 @@
 package dev.rockyj.staffing_pro_api.repositories;
 
-import dev.rockyj.staffing_pro_api.entities.Geography;
+import dev.rockyj.staffing_pro_api.domain.entities.Geography;
 import io.micronaut.data.annotation.Query;
 import io.micronaut.data.annotation.Repository;
 import io.micronaut.data.repository.PageableRepository;
