@@ -12,9 +12,11 @@ import io.micronaut.scheduling.annotation.ExecuteOn;
 import io.micronaut.security.annotation.Secured;
 import io.micronaut.security.rules.SecurityRule;
 import jakarta.validation.constraints.NotBlank;
+import lombok.RequiredArgsConstructor;
 
 import java.util.Map;
 
+@RequiredArgsConstructor
 @ExecuteOn(TaskExecutors.IO)
 @Controller("/v1/projects")
 @Secured(SecurityRule.IS_AUTHENTICATED)
@@ -23,10 +25,6 @@ public class ProjectsController {
     private final ProjectService projectService;
 
     private final Integer PAGE_SIZE = 10;
-
-    ProjectsController(ProjectService projectService) {
-        this.projectService = projectService;
-    }
 
     @Get("/{pageNumber}")
     Map<String, Object> index(@PathVariable @NotBlank String pageNumber, @QueryValue @Nullable String country) {

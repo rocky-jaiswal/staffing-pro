@@ -36,7 +36,7 @@ dependencies {
 
     testImplementation("org.mockito:mockito-core")
 
-    aotPlugins platform("io.micronaut.platform:micronaut-platform:4.1.5")
+    aotPlugins platform("io.micronaut.platform:micronaut-platform:4.1.6")
     aotPlugins("io.micronaut.security:micronaut-security-aot")
 }
 

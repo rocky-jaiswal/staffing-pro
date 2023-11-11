@@ -8,20 +8,18 @@ import io.micronaut.scheduling.TaskExecutors;
 import io.micronaut.scheduling.annotation.ExecuteOn;
 import io.micronaut.security.annotation.Secured;
 import io.micronaut.security.rules.SecurityRule;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 @ExecuteOn(TaskExecutors.IO)
 @Controller("/v1/geographies")
 @Secured(SecurityRule.IS_AUTHENTICATED)
 public class GeographiesController {
 
     private final GeographyServices geographyServices;
-
-    GeographiesController(GeographyServices geographyServices) {
-        this.geographyServices = geographyServices;
-    }
-
+    
     @Get()
     List<GeographyDTO> index() {
         return this.geographyServices.findAllGeographies();

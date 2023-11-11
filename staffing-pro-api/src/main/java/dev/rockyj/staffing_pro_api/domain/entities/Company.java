@@ -1,6 +1,6 @@
 package dev.rockyj.staffing_pro_api.domain.entities;
 
-import dev.rockyj.staffing_pro_api.domain.dtos.CompanyDTO;
+import io.micronaut.core.annotation.Introspected;
 import io.micronaut.serde.annotation.Serdeable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -11,6 +11,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Serdeable
+@Introspected
 @Getter
 @Setter
 @ToString
@@ -26,10 +27,6 @@ public class Company {
     @NotNull
     @Column(columnDefinition = "TEXT")
     private String name;
-
-    public CompanyDTO toDTO() {
-        return new CompanyDTO(this.getId().toString(), this.getName());
-    }
 
     @Override
     public final boolean equals(Object o) {

@@ -5,29 +5,31 @@ import dev.rockyj.staffing_pro_api.domain.dtos.ProjectDTO;
 import dev.rockyj.staffing_pro_api.domain.dtos.ProjectPositionDTO;
 import dev.rockyj.staffing_pro_api.domain.dtos.SkillDTO;
 import dev.rockyj.staffing_pro_api.domain.entities.Project;
+import dev.rockyj.staffing_pro_api.domain.mappers.CompanyMapper;
+import dev.rockyj.staffing_pro_api.domain.mappers.CountryMapper;
+import dev.rockyj.staffing_pro_api.domain.mappers.IndustryMapper;
+import dev.rockyj.staffing_pro_api.domain.mappers.VerticalMapper;
 import dev.rockyj.staffing_pro_api.repositories.ProjectsRepository;
 import io.micronaut.data.model.Page;
 import io.micronaut.data.model.Pageable;
 import jakarta.inject.Singleton;
+import lombok.RequiredArgsConstructor;
 
 import java.util.Map;
 import java.util.stream.Collectors;
 
 @Singleton
+@RequiredArgsConstructor
 public class ProjectService {
 
     private final ProjectsRepository projectsRepository;
-
-    ProjectService(ProjectsRepository projectsRepository) {
-        this.projectsRepository = projectsRepository;
-    }
-
-    public Long countProjects() {
-        return projectsRepository.count();
-    }
+    private final CompanyMapper companyMapper;
+    private final IndustryMapper industryMapper;
+    private final VerticalMapper verticalMapper;
+    private final CountryMapper countryMapper;
 
     public Map<String, Object> findAllProjectsWithDetails(Pageable pageable, String selectedCountryId) {
-        Page<Project> projects = null;
+        Page<Project> projects;
 
         if (selectedCountryId != null) {
             projects = projectsRepository.findByCountry(pageable, selectedCountryId);
@@ -48,9 +50,9 @@ public class ProjectService {
                         project.isPromoted(),
                         project.isHidden(),
                         project.isArchived(),
-                        project.getCompany().toDTO(),
-                        project.getIndustry().toDTO(),
-                        project.getVertical().toDTO(),
+                        companyMapper.toCompanyDTO(project.getCompany()),
+                        industryMapper.toIndustryDTO(project.getIndustry()),
+                        verticalMapper.toVerticalDTO(project.getVertical()),
                         project.getProjectCities()
                                 .stream()
                                 .map((var city) -> new CityDTO(
@@ -74,7 +76,8 @@ public class ProjectService {
                                                                 skill.getDescription()))
                                                 .collect(Collectors.toList())
                                 )).collect(Collectors.toList())
-                )).collect(Collectors.toList());
+                ))
+                .collect(Collectors.toList());
 
         return Map.of("projects", projectList, "count", projects.getTotalSize());
     }

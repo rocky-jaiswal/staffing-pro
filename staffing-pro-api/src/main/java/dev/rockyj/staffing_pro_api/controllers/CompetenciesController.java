@@ -8,19 +8,17 @@ import io.micronaut.scheduling.TaskExecutors;
 import io.micronaut.scheduling.annotation.ExecuteOn;
 import io.micronaut.security.annotation.Secured;
 import io.micronaut.security.rules.SecurityRule;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 @ExecuteOn(TaskExecutors.IO)
 @Controller("/v1/competencies")
 @Secured(SecurityRule.IS_AUTHENTICATED)
 public class CompetenciesController {
 
     private final CompetencyServices competencyServices;
-
-    public CompetenciesController(CompetencyServices competencyServices) {
-        this.competencyServices = competencyServices;
-    }
 
     @Get()
     List<CompetencyDTO> index() {

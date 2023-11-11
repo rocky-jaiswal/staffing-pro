@@ -8,20 +8,18 @@ import io.micronaut.scheduling.TaskExecutors;
 import io.micronaut.scheduling.annotation.ExecuteOn;
 import io.micronaut.security.annotation.Secured;
 import io.micronaut.security.rules.SecurityRule;
+import lombok.RequiredArgsConstructor;
 
 import java.util.Comparator;
 import java.util.List;
 
+@RequiredArgsConstructor
 @ExecuteOn(TaskExecutors.IO)
 @Controller("/v1/countries")
 @Secured(SecurityRule.IS_AUTHENTICATED)
 public class CountriesController {
 
     private final CountryServices countryServices;
-
-    CountriesController(CountryServices countryServices) {
-        this.countryServices = countryServices;
-    }
 
     @Get()
     List<CountryDTO> index() {
