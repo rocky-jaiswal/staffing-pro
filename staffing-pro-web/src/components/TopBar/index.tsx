@@ -18,12 +18,12 @@ function TopBar() {
 
   return (
     <div className="navbar flex justify-between bg-blue-400">
-      <div className="p-6">
+      <div className="py-4 px-6">
         <h1 className="text-3xl font-bold text-base-100">Staffing Pro</h1>
       </div>
       <div className="p-4">
-        <div className="p-6">
-          <p className="text-l font-bold text-base-100">
+        <div>
+          <p className="text-l font-bold text-base-100 mx-2">
             Welcome, {userDetails.isSuccess ? userDetails.data?.email : 'user'}
           </p>
         </div>
