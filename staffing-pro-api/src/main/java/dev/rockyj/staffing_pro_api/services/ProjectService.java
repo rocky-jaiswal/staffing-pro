@@ -6,7 +6,6 @@ import dev.rockyj.staffing_pro_api.domain.dtos.ProjectPositionDTO;
 import dev.rockyj.staffing_pro_api.domain.dtos.SkillDTO;
 import dev.rockyj.staffing_pro_api.domain.entities.Project;
 import dev.rockyj.staffing_pro_api.domain.mappers.CompanyMapper;
-import dev.rockyj.staffing_pro_api.domain.mappers.CountryMapper;
 import dev.rockyj.staffing_pro_api.domain.mappers.IndustryMapper;
 import dev.rockyj.staffing_pro_api.domain.mappers.VerticalMapper;
 import dev.rockyj.staffing_pro_api.repositories.ProjectsRepository;
@@ -26,15 +25,22 @@ public class ProjectService {
     private final CompanyMapper companyMapper;
     private final IndustryMapper industryMapper;
     private final VerticalMapper verticalMapper;
-    private final CountryMapper countryMapper;
+    // private final CountryMapper countryMapper;
 
-    public Map<String, Object> findAllProjectsWithDetails(Pageable pageable, String selectedCountryId) {
+    public Map<String, Object> findAllProjectsWithDetails(Pageable pageable,
+                                                          String selectedGeographyId,
+                                                          String selectedCountryId,
+                                                          String selectedCompetencyId) {
         Page<Project> projects;
 
-        if (selectedCountryId != null) {
-            projects = projectsRepository.findByCountry(pageable, selectedCountryId);
-        } else {
+        if (selectedGeographyId == null && selectedCountryId == null && selectedCompetencyId == null) {
             projects = projectsRepository.findAll(pageable);
+        } else {
+            projects = projectsRepository.findByGeographyAndCountryAndCompetency(
+                    pageable,
+                    selectedGeographyId,
+                    selectedCountryId,
+                    selectedCompetencyId);
         }
 
         var projectList = projects.

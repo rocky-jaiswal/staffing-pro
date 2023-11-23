@@ -27,7 +27,15 @@ public class ProjectsController {
     private final Integer PAGE_SIZE = 10;
 
     @Get("/{pageNumber}")
-    Map<String, Object> index(@PathVariable @NotBlank String pageNumber, @QueryValue @Nullable String country) {
-        return this.projectService.findAllProjectsWithDetails(Pageable.from(Integer.parseInt(pageNumber), PAGE_SIZE), country);
+    Map<String, Object> index(@PathVariable @NotBlank String pageNumber,
+                              @QueryValue @Nullable String geography,
+                              @QueryValue @Nullable String country,
+                              @QueryValue @Nullable String competency) {
+        return this.projectService
+                .findAllProjectsWithDetails(
+                        Pageable.from(Integer.parseInt(pageNumber), PAGE_SIZE),
+                        geography,
+                        country,
+                        competency);
     }
 }

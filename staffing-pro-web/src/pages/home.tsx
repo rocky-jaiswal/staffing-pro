@@ -29,13 +29,18 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 const HomePage: NextPageWithLayout = () => {
   const [pageNumber, setPageNumber] = useState(0)
   const [showFilters, setShowFilters] = useState(false)
-  const [selectedCountry, setSelectedCountry] = useState<string | null>(null)
+  const [selectedGeography, setSelectedGeography] = useState<string | null>(
+    null
+  )
+  const [filter, setFilter] = useState<(string | null)[]>([])
 
   const competencies = api.competencies.competenciesList.useQuery()
-  const countries = api.countries.countryList.useQuery()
+  const geographies = api.geographies.geographyList.useQuery()
+  const countries = api.countries.countryList.useQuery({ selectedGeography })
   const projects = api.projects.projectList.useQuery({
     pageNumber,
-    selectedCountry,
+    selectedGeography,
+    filter,
   })
 
   const isMaxPage =
@@ -53,11 +58,13 @@ const HomePage: NextPageWithLayout = () => {
       <div>
         {showFilters ? (
           <FilterBox
+            geographies={geographies.isSuccess ? geographies.data : []}
             countries={countries.isSuccess ? countries.data : []}
             competencies={competencies.isSuccess ? competencies.data : []}
-            setSelectedCountry={(country: string) =>
-              setSelectedCountry(country)
+            setSelectedGeography={(geography: string) =>
+              setSelectedGeography(geography)
             }
+            setFilter={(filter: (string | null)[]) => setFilter(filter)}
           />
         ) : (
           <div />

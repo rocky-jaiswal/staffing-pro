@@ -12,6 +12,7 @@ import superjson from 'superjson'
 
 import { type AppRouter } from '../server/api/root'
 import {
+  type Geography,
   type Competency,
   type Country,
   type Project,
@@ -70,5 +71,6 @@ export type RouterInputs = inferRouterInputs<AppRouter>
 export type RouterOutputs = inferRouterOutputs<AppRouter>
 
 export type ProjectType = Project
+export type GeographyType = Geography
 export type CountryType = Country
 export type CompetencyType = Competency

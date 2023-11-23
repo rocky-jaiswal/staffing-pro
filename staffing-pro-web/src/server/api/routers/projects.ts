@@ -15,14 +15,23 @@ export const projectsRouter = createTRPCRouter({
     .input(
       z.object({
         pageNumber: z.number(),
-        selectedCountry: z.string().nullable(),
+        selectedGeography: z.string().nullable(),
+        filter: z.array(z.string().nullable()),
       })
     )
     .query(async ({ input, ctx }) => {
       let queryUrl = `${env.MAIN_API_URL}/v1/projects/${input.pageNumber}`
 
-      if (input.selectedCountry) {
-        queryUrl = `${queryUrl}?country=${input.selectedCountry}`
+      if (input.selectedGeography && !input.filter[0] && !input.filter[1]) {
+        queryUrl = `${queryUrl}?geography=${input.selectedGeography}`
+      }
+
+      if (input.filter[0] && !input.filter[1]) {
+        queryUrl = `${queryUrl}?country=${input.filter[0]}`
+      } else if (!input.filter[0] && input.filter[1]) {
+        queryUrl = `${queryUrl}?competency=${input.filter[1]}`
+      } else if (input.filter[0] && input.filter[1]) {
+        queryUrl = `${queryUrl}?country=${input.filter[0]}&competency=${input.filter[1]}`
       }
 
       try {
