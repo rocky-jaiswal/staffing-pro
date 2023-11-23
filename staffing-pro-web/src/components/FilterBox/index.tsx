@@ -9,8 +9,8 @@ interface Props {
   geographies: GeographyType[]
   countries?: CountryType[]
   competencies?: CompetencyType[]
-  setSelectedGeography: (geographyId: string) => unknown
   setFilter: (filter: (string | null)[]) => unknown
+  clearAll: () => unknown
 }
 
 function FilterBox(props: Props) {
@@ -26,8 +26,9 @@ function FilterBox(props: Props) {
           className="select select-secondary w-full max-w-xs"
           onChange={(e) => {
             setGeography(e.currentTarget.value)
-            props.setSelectedGeography(e.currentTarget.value)
+            props.setFilter([e.currentTarget.value, null, null])
           }}
+          value={geography}
         >
           <option key={0} value={''}>
             --
@@ -46,6 +47,7 @@ function FilterBox(props: Props) {
         <select
           className="select select-secondary w-full max-w-xs"
           onChange={(e) => setCountry(e.currentTarget.value)}
+          value={country}
         >
           <option key={0} value={''}>
             --
@@ -64,6 +66,7 @@ function FilterBox(props: Props) {
         <select
           className="select select-secondary w-full max-w-xs"
           onChange={(e) => setCompetency(e.currentTarget.value)}
+          value={competency}
         >
           <option key={0} value={''}>
             --
@@ -79,17 +82,30 @@ function FilterBox(props: Props) {
       </div>
       <div className="flex py-4">
         <button
-          className="btn-primary p-2"
+          className="btn-primary p-2 mx-2"
           disabled={[geography, country, competency].every((e) => e === '')}
           onClick={() => {
             if (country !== '' || competency != '') {
               props.setFilter(
-                [country, competency].map((e) => (e === '' ? null : e))
+                [geography, country, competency].map((e) =>
+                  e === '' ? null : e
+                )
               )
             }
           }}
         >
           Apply
+        </button>
+        <button
+          className="btn-secondary p-2"
+          onClick={() => {
+            setGeography('')
+            setCountry('')
+            setCompetency('')
+            props.clearAll()
+          }}
+        >
+          Clear All
         </button>
       </div>
     </div>
