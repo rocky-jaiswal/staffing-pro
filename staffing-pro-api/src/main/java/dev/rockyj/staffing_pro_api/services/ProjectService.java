@@ -11,6 +11,7 @@ import dev.rockyj.staffing_pro_api.domain.mappers.VerticalMapper;
 import dev.rockyj.staffing_pro_api.repositories.ProjectsRepository;
 import io.micronaut.data.model.Page;
 import io.micronaut.data.model.Pageable;
+import jakarta.annotation.Nullable;
 import jakarta.inject.Singleton;
 import lombok.RequiredArgsConstructor;
 
@@ -28,9 +29,9 @@ public class ProjectService {
     // private final CountryMapper countryMapper;
 
     public Map<String, Object> findAllProjectsWithDetails(Pageable pageable,
-                                                          String selectedGeographyId,
-                                                          String selectedCountryId,
-                                                          String selectedCompetencyId) {
+                                                          @Nullable String selectedGeographyId,
+                                                          @Nullable String selectedCountryId,
+                                                          @Nullable String selectedCompetencyId) {
         Page<Project> projects;
 
         if (selectedGeographyId == null && selectedCountryId == null && selectedCompetencyId == null) {

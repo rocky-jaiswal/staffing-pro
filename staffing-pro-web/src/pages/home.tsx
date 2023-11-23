@@ -30,11 +30,14 @@ const HomePage: NextPageWithLayout = () => {
   const [pageNumber, setPageNumber] = useState(0)
   const [showFilters, setShowFilters] = useState(false)
   const [filter, setFilter] = useState<(string | null)[]>([])
+  const [selectedGeography, setSelectedGeography] = useState<string | null>(
+    null
+  )
 
   const competencies = api.competencies.competenciesList.useQuery()
   const geographies = api.geographies.geographyList.useQuery()
   const countries = api.countries.countryList.useQuery({
-    selectedGeography: filter[0] ?? null,
+    selectedGeography,
   })
   const projects = api.projects.projectList.useQuery({
     pageNumber,
@@ -59,8 +62,8 @@ const HomePage: NextPageWithLayout = () => {
             geographies={geographies.isSuccess ? geographies.data : []}
             countries={countries.isSuccess ? countries.data : []}
             competencies={competencies.isSuccess ? competencies.data : []}
+            setSelectedGeography={setSelectedGeography}
             setFilter={(filter: (string | null)[]) => setFilter(filter)}
-            clearAll={() => setFilter([])}
           />
         ) : (
           <div />

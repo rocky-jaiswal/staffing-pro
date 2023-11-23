@@ -1,7 +1,6 @@
 package dev.rockyj.staffing_pro_api.controllers;
 
 import dev.rockyj.staffing_pro_api.services.ProjectService;
-import io.micronaut.core.annotation.Nullable;
 import io.micronaut.data.model.Pageable;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
@@ -12,6 +11,7 @@ import io.micronaut.scheduling.annotation.ExecuteOn;
 import io.micronaut.security.annotation.Secured;
 import io.micronaut.security.rules.SecurityRule;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Map;
@@ -28,14 +28,14 @@ public class ProjectsController {
 
     @Get("/{pageNumber}")
     Map<String, Object> index(@PathVariable @NotBlank String pageNumber,
-                              @QueryValue @Nullable String geography,
-                              @QueryValue @Nullable String country,
-                              @QueryValue @Nullable String competency) {
+                              @QueryValue @NotNull String geography,
+                              @QueryValue @NotNull String country,
+                              @QueryValue @NotNull String competency) {
         return this.projectService
                 .findAllProjectsWithDetails(
                         Pageable.from(Integer.parseInt(pageNumber), PAGE_SIZE),
-                        geography,
-                        country,
-                        competency);
+                        geography.isEmpty() ? null : geography,
+                        country.isEmpty() ? null : country,
+                        competency.isEmpty() ? null : competency);
     }
 }

@@ -9,8 +9,8 @@ interface Props {
   geographies: GeographyType[]
   countries?: CountryType[]
   competencies?: CompetencyType[]
+  setSelectedGeography: (geography: string) => unknown
   setFilter: (filter: (string | null)[]) => unknown
-  clearAll: () => unknown
 }
 
 function FilterBox(props: Props) {
@@ -26,7 +26,8 @@ function FilterBox(props: Props) {
           className="select select-secondary w-full max-w-xs"
           onChange={(e) => {
             setGeography(e.currentTarget.value)
-            props.setFilter([e.currentTarget.value, null, null])
+            setCountry('')
+            props.setSelectedGeography(e.currentTarget.value)
           }}
           value={geography}
         >
@@ -85,13 +86,7 @@ function FilterBox(props: Props) {
           className="btn-primary p-2 mx-2"
           disabled={[geography, country, competency].every((e) => e === '')}
           onClick={() => {
-            if (country !== '' || competency != '') {
-              props.setFilter(
-                [geography, country, competency].map((e) =>
-                  e === '' ? null : e
-                )
-              )
-            }
+            props.setFilter([geography, country, competency])
           }}
         >
           Apply
@@ -102,7 +97,7 @@ function FilterBox(props: Props) {
             setGeography('')
             setCountry('')
             setCompetency('')
-            props.clearAll()
+            props.setFilter([])
           }}
         >
           Clear All
