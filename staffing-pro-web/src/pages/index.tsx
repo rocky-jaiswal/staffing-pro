@@ -6,6 +6,7 @@ import Image from 'next/image'
 import LoginForm from '../components/LoginForm'
 import SocialLogin from '../components/SocialLogin'
 import RegistrationForm from '../components/RegistrationForm'
+import LoginRegister from '../components/LoginRegister'
 
 interface ShowLogin {
   showLogin: boolean
@@ -37,33 +38,7 @@ const Home: NextPage = () => {
           </div>
         </div>
         <div className="flex flex-col bg-blue-200 p-8 lg:w-1/2">
-          <div className="mb-8">
-            <button
-              disabled={display.showLogin}
-              onClick={() => setDisplay({ showLogin: true })}
-              className="p-4"
-              style={
-                display.showLogin
-                  ? { color: 'black', opacity: 1 }
-                  : { color: 'blue' }
-              }
-            >
-              Login
-            </button>
-            <span>|</span>
-            <button
-              disabled={!display.showLogin}
-              className="p-4"
-              onClick={() => setDisplay({ showLogin: false })}
-              style={
-                display.showLogin
-                  ? { color: 'blue' }
-                  : { color: 'black', opacity: 1 }
-              }
-            >
-              Register
-            </button>
-          </div>
+          <LoginRegister display={display} setDisplay={setDisplay} />
           <LoginForm display={display.showLogin} />
           <RegistrationForm display={!display.showLogin} />
           <hr />
