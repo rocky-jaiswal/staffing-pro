@@ -29,8 +29,8 @@ Actions
 
 - Create project
 - Apply / Approve for positions
-- Alerts
-- Message project users (alert user)
+- (Mesg.) Alerts
+- (Mesg.) Message project users (alert user)
 
 Search
 
@@ -40,7 +40,7 @@ Search
 Interest
 
 - Combo of geog. / country / industry / vertical / company / skills / time
-- Get alerts
+- (Mesg.) Get alerts
 
 Project Page
 

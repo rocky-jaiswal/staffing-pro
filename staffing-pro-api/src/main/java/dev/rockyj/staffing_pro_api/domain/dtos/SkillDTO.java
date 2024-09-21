@@ -5,5 +5,5 @@ import io.micronaut.serde.annotation.Serdeable;
 
 @Serdeable
 @Introspected
-public record SkillDTO(String id, String name, String description) {
+public record SkillDTO(String id, String name, String description, CompetencyDTO competencyDTO) {
 }

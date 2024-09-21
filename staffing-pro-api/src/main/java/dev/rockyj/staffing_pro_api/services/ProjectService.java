@@ -16,6 +16,7 @@ import jakarta.inject.Singleton;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Singleton
@@ -47,45 +48,56 @@ public class ProjectService {
         var projectList = projects.
                 getContent()
                 .stream()
-                .map((var project) -> new ProjectDTO(
-                        project.getId().toString(),
-                        project.getTitle(),
-                        project.getDescription(),
-                        project.getStage().toString(),
-                        project.getStartDate(),
-                        project.getEndDate(),
-                        project.isPromoted(),
-                        project.isHidden(),
-                        project.isArchived(),
-                        companyMapper.toCompanyDTO(project.getCompany()),
-                        industryMapper.toIndustryDTO(project.getIndustry()),
-                        verticalMapper.toVerticalDTO(project.getVertical()),
-                        project.getProjectCities()
-                                .stream()
-                                .map((var city) -> new CityDTO(
-                                        city.getId().toString(),
-                                        city.getName(),
-                                        city.getCountry().toDTO())).toList(),
-                        project.getProjectPositions()
-                                .stream()
-                                .map((var position) -> new ProjectPositionDTO(
-                                        position.getId().toString(),
-                                        position.getTitle(),
-                                        position.getDescription(),
-                                        position.getStartDate(),
-                                        position.getEndDate(),
-                                        position.isOpen(),
-                                        position.getSkills()
-                                                .stream()
-                                                .map((var skill) ->
-                                                        new SkillDTO(skill.getId().toString(),
-                                                                skill.getName(),
-                                                                skill.getDescription()))
-                                                .collect(Collectors.toList())
-                                )).collect(Collectors.toList())
-                ))
+                .map(this::toProjectDTO)
                 .collect(Collectors.toList());
 
         return Map.of("projects", projectList, "count", projects.getTotalSize());
+    }
+
+    public ProjectDTO getProject(String projectId) {
+        var projectEntity = projectsRepository.findById(UUID.fromString(projectId));
+        return projectEntity.map(this::toProjectDTO).orElseThrow();
+    }
+
+    private ProjectDTO toProjectDTO(Project project) {
+        return new ProjectDTO(
+                project.getId().toString(),
+                project.getTitle(),
+                project.getDescription(),
+                project.getStage().toString(),
+                project.getStartDate(),
+                project.getEndDate(),
+                project.isPromoted(),
+                project.isHidden(),
+                project.isArchived(),
+                companyMapper.toCompanyDTO(project.getCompany()),
+                industryMapper.toIndustryDTO(project.getIndustry()),
+                verticalMapper.toVerticalDTO(project.getVertical()),
+                project.getProjectCities()
+                        .stream()
+                        .map((var city) -> new CityDTO(
+                                city.getId().toString(),
+                                city.getName(),
+                                city.getCountry().toDTO())).toList(),
+                project.getProjectPositions()
+                        .stream()
+                        .map((var position) -> new ProjectPositionDTO(
+                                position.getId().toString(),
+                                position.getTitle(),
+                                position.getDescription(),
+                                position.getStartDate(),
+                                position.getEndDate(),
+                                position.isOpen(),
+                                position.getSkills()
+                                        .stream()
+                                        .map((var skill) ->
+                                                new SkillDTO(skill.getId().toString(),
+                                                        skill.getName(),
+                                                        skill.getDescription(),
+                                                        skill.getCompetency().toDTO()))
+                                        .collect(Collectors.toList())
+                        ))
+                        .collect(Collectors.toList())
+        );
     }
 }

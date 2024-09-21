@@ -1,5 +1,6 @@
 package dev.rockyj.staffing_pro_api.controllers;
 
+import dev.rockyj.staffing_pro_api.domain.dtos.ProjectDTO;
 import dev.rockyj.staffing_pro_api.services.ProjectService;
 import io.micronaut.data.model.Pageable;
 import io.micronaut.http.annotation.Controller;
@@ -27,15 +28,20 @@ public class ProjectsController {
     private final Integer PAGE_SIZE = 10;
 
     @Get("/{pageNumber}")
-    Map<String, Object> index(@PathVariable @NotBlank String pageNumber,
-                              @QueryValue @NotNull String geography,
-                              @QueryValue @NotNull String country,
-                              @QueryValue @NotNull String competency) {
+    public Map<String, Object> index(@PathVariable @NotBlank String pageNumber,
+                                     @QueryValue @NotNull String geography,
+                                     @QueryValue @NotNull String country,
+                                     @QueryValue @NotNull String competency) {
         return this.projectService
                 .findAllProjectsWithDetails(
                         Pageable.from(Integer.parseInt(pageNumber), PAGE_SIZE),
                         geography.isEmpty() ? null : geography,
                         country.isEmpty() ? null : country,
                         competency.isEmpty() ? null : competency);
+    }
+
+    @Get("/{projectId}")
+    public ProjectDTO get(@PathVariable @NotBlank String projectId) {
+        return this.projectService.getProject(projectId);
     }
 }

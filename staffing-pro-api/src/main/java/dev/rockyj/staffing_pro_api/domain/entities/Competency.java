@@ -1,5 +1,6 @@
 package dev.rockyj.staffing_pro_api.domain.entities;
 
+import dev.rockyj.staffing_pro_api.domain.dtos.CompetencyDTO;
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.serde.annotation.Serdeable;
 import jakarta.persistence.*;
@@ -48,5 +49,9 @@ public class Competency {
     @Override
     public final int hashCode() {
         return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
+    }
+
+    public CompetencyDTO toDTO() {
+        return new CompetencyDTO(this.id.toString(), this.getName());
     }
 }

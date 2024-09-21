@@ -15,7 +15,7 @@ const getKey = async (header: JwtHeader) => client.getSigningKey(header.kid)
 export const encryptToken = async (token: string) => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
   const sealed = await Iron.seal(token, `${env.SECRET}`, Iron.defaults)
-  return sealed as string
+  return sealed
 }
 
 export const decryptToken = async (token: string) => {
@@ -30,7 +30,7 @@ export const validateJWT = async (cookieToken: string) => {
   if (!header) {
     throw new Error('Invalid user / token')
   }
-  
+
   const key = await getKey(header)
 
   const decoded = await new Promise<JwtPayload>((resolve, reject) => {
