@@ -70,7 +70,7 @@ export type RouterInputs = inferRouterInputs<AppRouter>
  **/
 export type RouterOutputs = inferRouterOutputs<AppRouter>
 
-export type ProjectType = Project
-export type GeographyType = Geography
-export type CountryType = Country
-export type CompetencyType = Competency
+export type { Project }
+export type { Geography }
+export type { Country }
+export type { Competency }

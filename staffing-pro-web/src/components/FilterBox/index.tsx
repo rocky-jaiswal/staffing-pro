@@ -1,14 +1,10 @@
 import { useState } from 'react'
-import {
-  type CompetencyType,
-  type CountryType,
-  type GeographyType,
-} from '../../utils/api'
+import { type Competency, type Country, type Geography } from '../../utils/api'
 
 interface Props {
-  geographies: GeographyType[]
-  countries?: CountryType[]
-  competencies?: CompetencyType[]
+  geographies: Geography[]
+  countries?: Country[]
+  competencies?: Competency[]
   setSelectedGeography: (geography: string) => unknown
   setFilter: (filter: (string | null)[]) => unknown
 }
@@ -34,7 +30,7 @@ function FilterBox(props: Props) {
           <option key={0} value={''}>
             --
           </option>
-          {(props.geographies ?? []).map((geography: GeographyType) => {
+          {(props.geographies ?? []).map((geography: Geography) => {
             return (
               <option key={geography.id} value={geography.id}>
                 {geography.name}
@@ -53,7 +49,7 @@ function FilterBox(props: Props) {
           <option key={0} value={''}>
             --
           </option>
-          {(props.countries ?? []).map((country: CountryType) => {
+          {(props.countries ?? []).map((country: Country) => {
             return (
               <option key={country.id} value={country.id}>
                 {country.name}
@@ -72,7 +68,7 @@ function FilterBox(props: Props) {
           <option key={0} value={''}>
             --
           </option>
-          {(props.competencies ?? []).map((competency: CompetencyType) => {
+          {(props.competencies ?? []).map((competency: Competency) => {
             return (
               <option key={competency.id} value={competency.id}>
                 {competency.name}

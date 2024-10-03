@@ -1,14 +1,14 @@
-import { type ProjectType } from '../../utils/api'
+import { type Project } from '../../utils/api'
 
 interface Props {
-  projects: ProjectType[]
+  projects: Project[]
 }
 
 function ProjectList(props: Props) {
   return (
     <div className="flex justify-between">
       <div className="flex flex-col w-full">
-        {props.projects.map((project: ProjectType) => {
+        {props.projects.map((project: Project) => {
           return (
             <div key={project.id}>
               <div className="flex justify-between border border-slate-200 rounded-sm p-1 shadow">
